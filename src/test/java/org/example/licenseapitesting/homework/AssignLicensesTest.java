@@ -23,6 +23,7 @@ public class AssignLicensesTest extends BaseTest {
     private static final String AVAILABLE_PRODUCTCODE = "II";
     private static final String UNAVAILABLE_PRODUCTCODE = "CL";
     private static final String UNKNOWN_PRODUCTCODE = "UNKNOWN_PRODUCTCODE";
+    private static final String DISPOSABLE_EMAIL = "rhiley.azmir@dockleafs.com";
 
 
     @BeforeEach
@@ -105,6 +106,53 @@ public class AssignLicensesTest extends BaseTest {
                 .log().all()
                 .statusCode(200);
     }
+
+    @Test
+    public void AssignAvailableLicense_disposableEmail_ErrorInvalidEmail() throws IOException {
+        AssigneeContactRequest contact = getExistingUser();
+        contact.setEmail(DISPOSABLE_EMAIL);
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(AVAILABLE_LICENSEID)
+                .contact(contact)
+                .sendEmail(false)
+                .build();
+
+        RestAssured.given(requestSpecification)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post("/customer/licenses/assign")
+                .then()
+                .log().all()
+                .statusCode(400)
+                .body("code", equalTo("INVALID_CONTACT_EMAIL"))
+                .body("description", equalTo(DISPOSABLE_EMAIL));
+    }
+
+    @Test
+    public void AssignAvailableLicense_invalidFormatEmail_ErrorInvalidEmail() throws IOException {
+        AssigneeContactRequest contact = getExistingUser();
+        contact.setEmail("test.com");
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(AVAILABLE_LICENSEID)
+                .contact(contact)
+                .sendEmail(false)
+                .build();
+
+        RestAssured.given(requestSpecification)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post("/customer/licenses/assign")
+                .then()
+                .log().all()
+                .statusCode(400)
+                .body("code", equalTo("INVALID_CONTACT_EMAIL"))
+                .body("description", equalTo("test.com"));
+    }
+
 
     @Test
     public void assignAvailableLicense_NoUserProvided_ErrorBadRequest() throws IOException {
@@ -308,13 +356,15 @@ public class AssignLicensesTest extends BaseTest {
     }
 
     @Test
-    public void assignDuplicatedProductToUser_ErrorNotFound() throws IOException{
+    public void assignDuplicatedProductToUser_ErrorNotFound() throws IOException {
         //TODO assign 2 licenses for the same product to the same user
     }
 
     @Test
-    public void assignDifferentProductsToUser_ErrorNotFound() throws IOException{
+    public void assignDifferentProductsToUser_ErrorNotFound() throws IOException {
         //TODO assign 2 licenses for the same product to the same user
     }
+
+    //TODO basic format tests: past team id not as int32 etc.
 
 }
