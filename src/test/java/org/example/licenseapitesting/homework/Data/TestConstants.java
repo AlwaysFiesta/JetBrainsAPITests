@@ -10,9 +10,11 @@ public class TestConstants {
     public static final String AVAILABLE_PRODUCTCODE = "II";
     public static final String UNAVAILABLE_PRODUCTCODE = "CL";
     public static final String UNKNOWN_PRODUCTCODE = "UNKNOWN_PRODUCTCODE";
+    private static final String DISPOSABLE_EMAIL = "rhiley.azmir@dockleafs.com";
 
     public static final int AVAILABLE_LICENSE_SERVER = 2046529;
     public static final String ASSIGN_LICENSE_PATH = "/customer/licenses/assign";
     public static String CHANGE_LICENSE_TEAM_PATH = "/customer/changeLicensesTeam";
+
 
 }
