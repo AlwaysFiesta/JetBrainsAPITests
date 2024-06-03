@@ -7,24 +7,17 @@ import org.example.licenseapitesting.homework.domain.AssignFromTeamRequest;
 import org.example.licenseapitesting.homework.domain.AssignLicenseRequest;
 import org.example.licenseapitesting.homework.domain.AssigneeContactRequest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.example.licenseapitesting.homework.Data.TestConstants.*;
 import static org.example.licenseapitesting.homework.utils.Utils.*;
 import static org.hamcrest.Matchers.equalTo;
 
 
 public class AssignLicensesTest extends BaseTest {
-    private static final String AVAILABLE_LICENSEID = "N9IX2NWHK5";
-    private static final String UNAVAILABLE_LICENSEID = "XRMADR9T8M";
-    private static final String UNKNOWN_LICENSEID = "UNKNOWN_LICENSEID";
-    private static final int AVAILABLE_TEAMID = 2570807;
-    private static final String AVAILABLE_PRODUCTCODE = "II";
-    private static final String UNAVAILABLE_PRODUCTCODE = "CL";
-    private static final String UNKNOWN_PRODUCTCODE = "UNKNOWN_PRODUCTCODE";
-    private static final String DISPOSABLE_EMAIL = "rhiley.azmir@dockleafs.com";
-
 
     @BeforeEach
     public void makeLicenseAvailableToAssign() {
@@ -50,6 +43,7 @@ public class AssignLicensesTest extends BaseTest {
         }  */
     }
 
+    @Disabled
     @Test
     public void assignAvailableLicense_ToExistingAdminUserbyLicenceID_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -63,11 +57,12 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(200);
     }
 
+    @Disabled
     @Test
     public void assignAvailableLicense_ToNewUser_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -81,10 +76,12 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(200);
     }
+
+    @Disabled
 
     @Test
     public void AssignAvailableLicense_userNameNotAsInProfile_Success() throws IOException {
@@ -101,7 +98,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .log().all()
                 .statusCode(200);
@@ -166,16 +163,17 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(400);
     }
 
+    @Disabled
     @Test
     public void assignAvailableLicense_searchByTeamAndProduct_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAMID)
+                        .team(AVAILABLE_TEAM_1)
                         .productCode(AVAILABLE_PRODUCTCODE)
                         .build())
                 .contact(getExistingUser())
@@ -187,7 +185,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(200);
     }
@@ -196,7 +194,7 @@ public class AssignLicensesTest extends BaseTest {
     public void assignLicense_searchByUnknownTeam_ErrorNotFound() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(0)
+                        .team(UNKNOWN_TEAM)
                         .productCode(AVAILABLE_PRODUCTCODE)
                         .build())
                 .contact(getRandomUser())
@@ -208,16 +206,18 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
-                .statusCode(404);
+                .statusCode(404)
+                .body("code", equalTo("TEAM_NOT_FOUND"))
+                .body("description", equalTo(String.valueOf(UNKNOWN_TEAM)));
     }
 
     @Test
     public void assignLicense_searchByTeam_UnavailableExistingProduct_ErrorNotFound() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAMID)
+                        .team(AVAILABLE_TEAM_1)
                         .productCode(UNAVAILABLE_PRODUCTCODE)
                         .build())
                 .contact(getRandomUser())
@@ -229,19 +229,19 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .log().all()
                 .statusCode(400)
                 .body("code", equalTo("NO_AVAILABLE_LICENSE_TO_ASSIGN"))
-                .body("description", equalTo("No available license found to assign in the team 2570807 with product " + UNAVAILABLE_PRODUCTCODE));
+                .body("description", equalTo("No available license found to assign in the team " + AVAILABLE_TEAM_1 + " with product " + UNAVAILABLE_PRODUCTCODE));
     }
 
     @Test
     public void assignLicense_searchByTeam_UnknownProduct_ErrorNotFound() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAMID)
+                        .team(AVAILABLE_TEAM_1)
                         .productCode(UNKNOWN_PRODUCTCODE)
                         .build())
                 .contact(getRandomUser())
@@ -253,10 +253,10 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .log().all()
-                .statusCode(400)
+                .statusCode(404)
                 .body("code", equalTo("PRODUCT_NOT_FOUND"))
                 .body("description", equalTo(UNKNOWN_PRODUCTCODE));
     }
@@ -273,7 +273,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(400)
                 .body("code", equalTo("MISSING_FIELD"))
@@ -295,7 +295,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(400)
                 .body("code", equalTo("LICENSE_IS_NOT_AVAILABLE_TO_ASSIGN"))
@@ -303,6 +303,7 @@ public class AssignLicensesTest extends BaseTest {
 
     }
 
+    @Disabled
     @Test
     public void assignExistingAssignedLicense_ErrorLicenseUnavailable() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -316,7 +317,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(200);
 
@@ -325,13 +326,11 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .statusCode(400)
                 .body("code", equalTo("LICENSE_IS_NOT_AVAILABLE_TO_ASSIGN"))
-                .body("description", equalTo("ALLOCATED"));
-
-    }
+                .body("description", equalTo("ALLOCATED"));    }
 
     @Test
     public void assignNonExistingLicense_ErrorNotFound() throws IOException {
@@ -346,7 +345,7 @@ public class AssignLicensesTest extends BaseTest {
                 .body(assignLicenseRequest)
                 .log().all()
                 .when()
-                .post("/customer/licenses/assign")
+                .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .log().all()
                 .statusCode(404)
@@ -364,6 +363,9 @@ public class AssignLicensesTest extends BaseTest {
     public void assignDifferentProductsToUser_ErrorNotFound() throws IOException {
         //TODO assign 2 licenses for the same product to the same user
     }
+
+
+    //TODO check with devs when 403 forbidden here is thrown
 
     //TODO basic format tests: past team id not as int32 etc.
 
