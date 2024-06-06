@@ -1,10 +1,12 @@
-package org.example.licenseapitesting.homework;
+package org.example.licenseapitesting.homework.tests;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.example.licenseapitesting.homework.domain.ChangeTeamRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer available license to valid team")
     public void transferOneAvailableLicense_toValidTeam_Success() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
@@ -64,6 +67,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
 
 
     @Test
+    @DisplayName("Transfer unavailable license")
     public void transferUnavailableLicense_ToValidTeam_Success() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(UNAVAILABLE_LICENSEID)))
@@ -102,6 +106,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer several licenses")
     public void transferSeveralLicenses_ToValidTeam_Success() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(UNAVAILABLE_LICENSEID, AVAILABLE_LICENSEID)))
@@ -140,6 +145,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Empty list of licences for transfer")
     public void emptyLicenseListRequest_ToValidTeam_Success_EmptyLicenseIdListInResponse() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList()))
@@ -158,6 +164,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .body("licenseIds", Matchers.empty());
     }
     @Test
+    @DisplayName("Transfer unknown license")
     public void transferUnknownLicense_ToValidTeam_Success_EmptyLicenseIdListInResponse() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(UNKNOWN_LICENSEID)))
@@ -177,6 +184,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer license to the same team")
     public void transferLisense_ToSameTeam_Success_EmptyLicenseIdListInResponse() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
@@ -196,6 +204,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer license to unknown team")
     public void transferLisense_ToUnknownTeam_ErrorUnknownTeam() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
@@ -216,6 +225,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer available license to license server")
     public void transferAvailableLicense_toLicenseServer_Success() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
@@ -254,11 +264,14 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Transfer available license from license server")
+    @Disabled("Covered by transferAvailableLicense_toLicenseServer_Success for now")
     public void transferAvailableLicense_fromLicenseServer_toValidTeam_Success() {
-        //TODO: covered now in previous test. Will be added separately after setting up @BeforeEach
+        //TODO: covered now in transferAvailableLicense_toLicenseServer_Success. Will be added separately after setting up @BeforeEach
     }
 
     @Test
+    @DisplayName("No licenseIDs in request")
     public void missedMandatoryLicenseIDsInRequest_Error() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .targetTeamId(UNKNOWN_TEAM)
@@ -276,6 +289,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("No targetTeamID in request")
     public void noTargetTeamIDInRequest_ErrorTeamNotFound() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
