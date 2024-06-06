@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.example.licenseapitesting.homework.Data.TestConstants.*;
+import static org.example.licenseapitesting.homework.data.TestConstants.*;
 import static org.example.licenseapitesting.homework.utils.Utils.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -20,27 +20,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class AssignLicensesTest extends BaseTest {
 
     @BeforeEach
-    public void makeLicenseAvailableToAssign() {
-        //TODO: make same license available to assign in tests.
-        /* not working, cooldown period is 30 days per license per user
-        boolean isAvailableToAssign = RestAssured.given(requestSpecification)
-                .log().all()
-                .when()
-                .get("/customer/licenses/" + AVAILABLE_LICENCEID)
-                .then()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .log().status()
-                .log().body(true)
-                .extract().path("isAvailableToAssign");
-        if (!isAvailableToAssign) {
-            RestAssured.given(requestSpecification)
-                    .log().all()
-                    .when()
-                    .post("/customer/licenses/revoke?licenseId=" + AVAILABLE_LICENCEID)
-                    .then()
-                    .statusCode(200);
-        }  */
+    public void resetLicenses() {
+        //TODO: make same license available to assign in tests or some generator of licenses.
     }
 
     @Disabled
@@ -82,7 +63,6 @@ public class AssignLicensesTest extends BaseTest {
     }
 
     @Disabled
-
     @Test
     public void AssignAvailableLicense_userNameNotAsInProfile_Success() throws IOException {
         AssigneeContactRequest contact = getExistingUser();

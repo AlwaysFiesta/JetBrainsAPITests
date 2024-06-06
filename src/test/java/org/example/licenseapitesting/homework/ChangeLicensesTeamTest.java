@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.example.licenseapitesting.homework.Data.TestConstants.*;
+import static org.example.licenseapitesting.homework.data.TestConstants.*;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ChangeLicensesTeamTest extends BaseTest {

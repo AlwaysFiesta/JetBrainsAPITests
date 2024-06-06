@@ -1,4 +1,4 @@
-package org.example.licenseapitesting.homework.Data;
+package org.example.licenseapitesting.homework.data;
 
 public class TestConstants {
     public static final String AVAILABLE_LICENSEID = "N9IX2NWHK5";
