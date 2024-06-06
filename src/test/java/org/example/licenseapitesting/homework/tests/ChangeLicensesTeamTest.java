@@ -1,5 +1,6 @@
 package org.example.licenseapitesting.homework.tests;
 
+import io.qameta.allure.Epic;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.example.licenseapitesting.homework.domain.ChangeTeamRequest;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import static org.example.licenseapitesting.homework.data.TestConstants.*;
 import static org.hamcrest.Matchers.equalTo;
 
+@Epic("Transfer licenses tests")
 public class ChangeLicensesTeamTest extends BaseTest {
 
     //TODO check in code if license types like expired, Renewal stopped etc can somehow affect.

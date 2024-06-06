@@ -29,8 +29,6 @@ public class AssignLicensesTest extends BaseTest {
         //TODO: make same license available to assign in tests or some generator of licenses.
     }
 
-
-
     @Test
     @DisplayName("Assign available license to existing admin user. Search license by license ID")
     @Severity(SeverityLevel.BLOCKER) //just for fun, yeah, my blocker does not work :)
@@ -51,7 +49,6 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(200);
     }
 
-
     @Disabled
     @Test
     @DisplayName("Assign available license to new user")
@@ -71,7 +68,6 @@ public class AssignLicensesTest extends BaseTest {
                 .then()
                 .statusCode(200);
     }
-
 
     @Disabled
     @Test
@@ -95,7 +91,6 @@ public class AssignLicensesTest extends BaseTest {
                 .log().all()
                 .statusCode(200);
     }
-
 
     @Test
     @DisplayName("User with valid email from known disposable email service")
@@ -121,7 +116,6 @@ public class AssignLicensesTest extends BaseTest {
                 .body("description", equalTo(DISPOSABLE_EMAIL));
     }
 
-
     @Test
     @DisplayName("Invalid email")
     public void AssignAvailableLicense_invalidFormatEmail_ErrorInvalidEmail() throws IOException {
@@ -145,8 +139,6 @@ public class AssignLicensesTest extends BaseTest {
                 .body("code", equalTo("INVALID_CONTACT_EMAIL"))
                 .body("description", equalTo("test.com"));
     }
-
-
 
     @Test
     @DisplayName("User is not provided")
@@ -381,7 +373,6 @@ public class AssignLicensesTest extends BaseTest {
     public void assignDifferentProductsToUser_Success() throws IOException {
 
     }
-
 
     //TODO check with devs when 403 forbidden here is thrown
     //TODO basic format tests: past team id not as int32 etc.
