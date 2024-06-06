@@ -1,7 +1,8 @@
-package org.example.licenseapitesting.homework;
+package org.example.licenseapitesting.homework.tests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
@@ -34,6 +35,9 @@ public class BaseTest {
                 .accept(ContentType.JSON)
                 .header("X-Api-Key", token.getXApiKey())
                 .header("X-Customer-Code", token.getXCustomerCode());
+
+        //add logging to allure reports
+        RestAssured.filters(new AllureRestAssured());
     }
 
     @AfterAll
