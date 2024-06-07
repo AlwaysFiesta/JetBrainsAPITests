@@ -24,7 +24,7 @@ public class AssignLicensesTest extends BaseTest {
         //TODO: make same license available to assign in tests.
     }
 
-    @Disabled("Not working without test data reset")
+    @Disabled("Requires test data reset")
     @Test
     public void assignAvailableLicense_ToExistingAdminUserbyLicenceID_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -43,7 +43,7 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(200);
     }
 
-    @Disabled("Not working without test data reset")
+    @Disabled("Requires test data reset")
     @Test
     public void assignAvailableLicense_ToNewUser_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -62,7 +62,7 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(200);
     }
 
-    @Disabled("Not working without test data reset")
+    @Disabled("Requires test data reset")
     @Test
     public void AssignAvailableLicense_userNameNotAsInProfile_Success() throws IOException {
         AssigneeContactRequest contact = getExistingUser();
@@ -148,7 +148,7 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(400);
     }
 
-    @Disabled("Not working without test data reset")
+    @Disabled("Requires test data reset")
     @Test
     public void assignAvailableLicense_searchByTeamAndProduct_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -283,7 +283,7 @@ public class AssignLicensesTest extends BaseTest {
 
     }
 
-    @Disabled("Not working without test data reset")
+    @Disabled("Requires test data reset")
     @Test
     public void assignExistingAssignedLicense_ErrorLicenseUnavailable() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
@@ -356,8 +356,6 @@ public class AssignLicensesTest extends BaseTest {
                 .body("description", equalTo("Missing Edit permission on customer " + System.getenv("X_CUSTOMER_CODE") +" or on team with id " + TEAM_TEST1));
     }
 
-
-
     @Test
     public void assigAvailableLicense_withTokenFromAnotherTeam_Error() throws IOException {
         {
@@ -381,6 +379,24 @@ public class AssignLicensesTest extends BaseTest {
         }
     }
 
+    @Disabled("Requires test data reset")
+    @Test
+    public void assignAvailableLicense_withTeamAdminRole_Success() throws IOException {
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST2)
+                .contact(getExistingUser())
+                .sendEmail(false)
+                .build();
+
+        RestAssured.given(requestSpecificationTeamAdmin)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post(ASSIGN_LICENSE_PATH)
+                .then()
+                .statusCode(200);
+    }
 
     @Disabled("Not Implemented yet")
     @Test
