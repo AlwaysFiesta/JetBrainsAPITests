@@ -1,4 +1,4 @@
-package org.example.licenseapitesting.homework;
+package org.example.licenseapitesting.homework.suites;
 
 
 import io.restassured.RestAssured;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.example.licenseapitesting.homework.Data.TestConstants.*;
+import static org.example.licenseapitesting.homework.data.TestConstants.*;
 import static org.example.licenseapitesting.homework.utils.Utils.*;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -20,27 +20,8 @@ import static org.hamcrest.Matchers.equalTo;
 public class AssignLicensesTest extends BaseTest {
 
     @BeforeEach
-    public void makeLicenseAvailableToAssign() {
+    public void resetLicenses() {
         //TODO: make same license available to assign in tests.
-        /* not working, cooldown period is 30 days per license per user
-        boolean isAvailableToAssign = RestAssured.given(requestSpecification)
-                .log().all()
-                .when()
-                .get("/customer/licenses/" + AVAILABLE_LICENCEID)
-                .then()
-                .statusCode(200)
-                .contentType(ContentType.JSON)
-                .log().status()
-                .log().body(true)
-                .extract().path("isAvailableToAssign");
-        if (!isAvailableToAssign) {
-            RestAssured.given(requestSpecification)
-                    .log().all()
-                    .when()
-                    .post("/customer/licenses/revoke?licenseId=" + AVAILABLE_LICENCEID)
-                    .then()
-                    .statusCode(200);
-        }  */
     }
 
     @Disabled
@@ -52,7 +33,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -71,7 +52,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -82,7 +63,6 @@ public class AssignLicensesTest extends BaseTest {
     }
 
     @Disabled
-
     @Test
     public void AssignAvailableLicense_userNameNotAsInProfile_Success() throws IOException {
         AssigneeContactRequest contact = getExistingUser();
@@ -93,7 +73,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -114,7 +94,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -137,7 +117,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -158,7 +138,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -180,7 +160,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -201,7 +181,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -224,7 +204,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -248,7 +228,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -268,7 +248,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -290,7 +270,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -312,7 +292,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -321,7 +301,7 @@ public class AssignLicensesTest extends BaseTest {
                 .then()
                 .statusCode(200);
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -340,7 +320,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -354,19 +334,43 @@ public class AssignLicensesTest extends BaseTest {
 
     }
 
+    @Disabled("Not Implemented")
     @Test
     public void assignDuplicatedProductToUser_ErrorNotFound() throws IOException {
         //TODO assign 2 licenses for the same product to the same user
     }
 
+    @Disabled("Not Implemented")
     @Test
     public void assignDifferentProductsToUser_ErrorNotFound() throws IOException {
         //TODO assign 2 licenses for the same product to the same user
     }
 
 
-    //TODO check with devs when 403 forbidden here is thrown
+    @Test
+    public void assigAvailableLicense_withIViewerRole_Error() throws IOException {
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(UNKNOWN_LICENSEID)
+                .contact(getExistingUser())
+                .sendEmail(false)
+                .build();
 
-    //TODO basic format tests: past team id not as int32 etc.
+        RestAssured.given(requestSpecificationOrgAdmin)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post(ASSIGN_LICENSE_PATH)
+                .then()
+                .log().all()
+                .statusCode(404)
+                .body("code", equalTo("LICENSE_NOT_FOUND"))
+                .body("description", equalTo(UNKNOWN_LICENSEID));
+
+    }
+
+
+
+    //TODO basic format test: past team id not as int32
 
 }

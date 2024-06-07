@@ -1,4 +1,4 @@
-package org.example.licenseapitesting.homework;
+package org.example.licenseapitesting.homework.suites;
 
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.example.licenseapitesting.homework.Data.TestConstants.*;
+import static org.example.licenseapitesting.homework.data.TestConstants.*;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ChangeLicensesTeamTest extends BaseTest {
@@ -29,7 +29,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_2)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -42,13 +42,12 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .body("licenseIds", Matchers.containsInAnyOrder(AVAILABLE_LICENSEID));
         ;
 
-        //TODO: fix later with some @BeforeEach setup probably
         ChangeTeamRequest changeTeamRequestBack = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -70,7 +69,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_2)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -82,13 +81,12 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .body("licenseIds", Matchers.hasSize(1))
                 .body("licenseIds", Matchers.containsInAnyOrder(UNAVAILABLE_LICENSEID));
 
-        //TODO: fix later with some @BeforeEach setup probably
         ChangeTeamRequest changeTeamRequestBack = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(UNAVAILABLE_LICENSEID)))
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -108,7 +106,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_2)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -120,13 +118,12 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .body("licenseIds", Matchers.hasSize(2))
                 .body("licenseIds", Matchers.containsInAnyOrder(UNAVAILABLE_LICENSEID, AVAILABLE_LICENSEID));
 
-        //TODO: fix later with some @BeforeEach setup probably
         ChangeTeamRequest changeTeamRequestBack = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(UNAVAILABLE_LICENSEID, AVAILABLE_LICENSEID)))
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -146,7 +143,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -164,7 +161,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -183,7 +180,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -202,7 +199,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(UNKNOWN_TEAM)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -222,7 +219,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_LICENSE_SERVER)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -234,13 +231,12 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .body("licenseIds", Matchers.hasSize(1))
                 .body("licenseIds", Matchers.containsInAnyOrder(AVAILABLE_LICENSEID));
 
-        //TODO: fix later with some @BeforeEach setup probably
         ChangeTeamRequest changeTeamRequestBack = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
                 .targetTeamId(AVAILABLE_TEAM_1)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -255,7 +251,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
 
     @Test
     public void transferAvailableLicense_fromLicenseServer_toValidTeam_Success() {
-        //TODO: covered now in previous test. Will be added separately after setting up @BeforeEach
+        //TODO: covered now in transferAvailableLicense_toLicenseServer_Success. Will be added separately after setting up @BeforeEach
     }
 
     @Test
@@ -264,7 +260,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(UNKNOWN_TEAM)
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -281,7 +277,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID)))
                 .build();
 
-        RestAssured.given(requestSpecification)
+        RestAssured.given(requestSpecificationOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()

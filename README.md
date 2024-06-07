@@ -4,22 +4,31 @@ Suite of tests for JetBrains' licenses public API as my homework.
 
 ## Getting Started
 
-Tests aer taking API auth details from environment variables: 
-X_API_KEY
-X_CUSTOMER_CODE
+Tests are taking API auth details from environment variables. 
 
-**Windows:**
+**Initial setup**: 
 
-`set X_API_KEY="your_details_here"`
+1. Team1 with available license to assign.
+    * Enable API for Org Admin.
+    * Add Viewer to Team
+    * Enable API for Viewer
+   
 
-`set X_CUSTOMER_CODE="your_details_here"`
+2. Team2 with another available license to assign:
+    * Add Team Admin to Team.
+    * Enable API for Team Admin.
 
+ 
+3. Put tokens for users and you organisation ID to env variables in your system:
 
-**Linux/macOS:**
+   X_API_KEY_ORG_ADMIN
 
-`export X_API_KEY="your_details_here"`
+   X_API_KEY_TEAM_ADMIN
+   
+   X_API_KEY_VIEWER
 
-`export X_CUSTOMER_CODE="your_details_here"`
+   X_CUSTOMER_CODE
+
 
 ### Prerequisites
 
