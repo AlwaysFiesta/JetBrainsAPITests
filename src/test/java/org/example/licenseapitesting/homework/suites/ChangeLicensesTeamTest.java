@@ -5,7 +5,6 @@ import io.restassured.http.ContentType;
 import org.example.licenseapitesting.homework.domain.ChangeTeamRequest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST2)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -48,7 +47,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -70,7 +69,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST2)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -87,7 +86,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -107,7 +106,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST2)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -124,7 +123,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -144,7 +143,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -155,6 +154,8 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .statusCode(200)
                 .body("licenseIds", Matchers.empty());
     }
+
+    //TODO: why when we're transfering license to unknown team error is returned, but unknown license is ok?
     @Test
     public void transferUnknownLicense_ToValidTeam_Success_EmptyLicenseIdListInResponse() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
@@ -162,7 +163,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -181,7 +182,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -200,7 +201,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(UNKNOWN_TEAM)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -220,7 +221,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(AVAILABLE_LICENSE_SERVER)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -237,7 +238,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequestBack)
                 .log().all()
@@ -256,12 +257,12 @@ public class ChangeLicensesTeamTest extends BaseTest {
     }
 
     @Test
-    public void missedMandatoryLicenseIDsInRequest_Error() {
+    public void noLicenseIDsInRequest_Error() {
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .targetTeamId(UNKNOWN_TEAM)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -278,7 +279,7 @@ public class ChangeLicensesTeamTest extends BaseTest {
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID_TEAM_TEST1)))
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -293,12 +294,34 @@ public class ChangeLicensesTeamTest extends BaseTest {
 
     @Test
     public void transferAvailableLicense_withViewerRole_Error(){
+        //viewer cannot transfer at all, and cannot transfer to another team.
+        // Will try to transfer to same team to see the diff with case transferLisense_ToSameTeam_Success_EmptyLicenseIdListInResponse
         ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
                 .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID_TEAM_TEST1)))
-                .targetTeamId(TEAM_TEST2)
+                .targetTeamId(TEAM_TEST1)
                 .build();
 
-        RestAssured.given(requestSpecificationViewer)
+        RestAssured.given(requestSpecViewerTeamTest1)
+                .contentType(ContentType.JSON)
+                .body(changeTeamRequest)
+                .log().all()
+                .when()
+                .post(CHANGE_LICENSE_TEAM_PATH)
+                .then()
+                .log().all()
+                .statusCode(403)
+                .body("code", equalTo("TOKEN_TYPE_MISMATCH"))
+                .body("description", equalTo(String.valueOf("Changing team is not possible with a token that was generated for a specific team")));
+    }
+
+    @Test
+    public void transferAvailableLicense_withTeamAdminRole_Error(){
+        ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
+                .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID_TEAM_TEST2)))
+                .targetTeamId(TEAM_TEST1)
+                .build();
+
+        RestAssured.given(requestSpecAdminTeamTest2)
                 .contentType(ContentType.JSON)
                 .body(changeTeamRequest)
                 .log().all()
@@ -313,10 +336,25 @@ public class ChangeLicensesTeamTest extends BaseTest {
 
 
 
-    @Disabled("Not Implemented yet")
+
     @Test
-    public void transferAvailableLicense_withTeamAdminRole_Error(){
-    //TODO. Based on transferAvailableLicense_withViewerRole_Error test this one will likely throw an error as well.
+    public void transferAvailableLicense_FromAnotherTeam_Error(){
+        ChangeTeamRequest changeTeamRequest = ChangeTeamRequest.builder()
+                .licenseIds(new ArrayList<>(Arrays.asList(AVAILABLE_LICENSEID_TEAM_TEST1)))
+                .targetTeamId(TEAM_TEST2)
+                .build();
+
+        RestAssured.given(requestSpecAdminTeamTest2)
+                .contentType(ContentType.JSON)
+                .body(changeTeamRequest)
+                .log().all()
+                .when()
+                .post(CHANGE_LICENSE_TEAM_PATH)
+                .then()
+                .log().all()
+                .statusCode(403)
+                .body("code", equalTo("TOKEN_TYPE_MISMATCH"))
+                .body("description", equalTo(String.valueOf("Changing team is not possible with a token that was generated for a specific team")));
     }
 
     //TODO basic teamID type check, send String instead.

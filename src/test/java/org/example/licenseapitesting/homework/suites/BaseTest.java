@@ -17,17 +17,18 @@ public class BaseTest {
 
     public static final String BASE_URI = "https://account.jetbrains.com/api/v1";
     private static ApiToken tokenOrgAdmin = new TokenManager().getToken("X_API_KEY_ORG_ADMIN");
-    private static ApiToken tokenTeamAdmin = new TokenManager().getToken("X_API_KEY_TEAM_ADMIN");
-    private static ApiToken tokenViewer = new TokenManager().getToken("X_API_KEY_VIEWER");
+    private static ApiToken tokenAdminTeamTest2 = new TokenManager().getToken("X_API_KEY_TEAM_ADMIN");
+    private static ApiToken tokenViewerTeamTest2 = new TokenManager().getToken("X_API_KEY_VIEWER");
 
-    protected static RequestSpecification requestSpecificationOrgAdmin;
+    protected static RequestSpecification requestSpecOrgAdmin;
 
-    protected static RequestSpecification requestSpecificationTeamAdmin;
+    protected static RequestSpecification requestSpecAdminTeamTest2;
 
-    protected static RequestSpecification requestSpecificationViewer;
-    protected static RequestSpecification requestSpecificationInvalidToken;
+    protected static RequestSpecification requestSpecViewerTeamTest1;
 
-    protected static RequestSpecification requestSpecificationInvalidCustomerCode;
+    protected static RequestSpecification requestSpecInvalidToken;
+
+    protected static RequestSpecification requestSpecInvalidCustomerCode;
 
     @BeforeAll
     static void setUp() {
@@ -39,31 +40,31 @@ public class BaseTest {
                 (cls, charset) -> objectMapper
         ));
 
-        requestSpecificationOrgAdmin = RestAssured.given()
+        requestSpecOrgAdmin = RestAssured.given()
                 .baseUri(BASE_URI)
                 .accept(ContentType.JSON)
                 .header("X-Api-Key", tokenOrgAdmin.getXApiKey())
                 .header("X-Customer-Code", tokenOrgAdmin.getXCustomerCode());
 
-        requestSpecificationTeamAdmin = RestAssured.given()
+        requestSpecAdminTeamTest2 = RestAssured.given()
                 .baseUri(BASE_URI)
                 .accept(ContentType.JSON)
-                .header("X-Api-Key", tokenTeamAdmin.getXApiKey())
-                .header("X-Customer-Code", tokenTeamAdmin.getXCustomerCode());
+                .header("X-Api-Key", tokenAdminTeamTest2.getXApiKey())
+                .header("X-Customer-Code", tokenAdminTeamTest2.getXCustomerCode());
 
-        requestSpecificationViewer = RestAssured.given()
+        requestSpecViewerTeamTest1 = RestAssured.given()
                 .baseUri(BASE_URI)
                 .accept(ContentType.JSON)
-                .header("X-Api-Key", tokenViewer.getXApiKey())
-                .header("X-Customer-Code", tokenViewer.getXCustomerCode());
+                .header("X-Api-Key", tokenViewerTeamTest2.getXApiKey())
+                .header("X-Customer-Code", tokenViewerTeamTest2.getXCustomerCode());
 
-        requestSpecificationInvalidToken = RestAssured.given()
+        requestSpecInvalidToken = RestAssured.given()
                 .baseUri(BASE_URI)
                 .accept(ContentType.JSON)
                 .header("X-Api-Key", "invalid")
                 .header("X-Customer-Code",  tokenOrgAdmin.getXCustomerCode());
 
-        requestSpecificationInvalidCustomerCode = RestAssured.given()
+        requestSpecInvalidCustomerCode = RestAssured.given()
                 .baseUri(BASE_URI)
                 .accept(ContentType.JSON)
                 .header("X-Api-Key", tokenOrgAdmin.getXApiKey())

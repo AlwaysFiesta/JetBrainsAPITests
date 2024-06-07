@@ -33,7 +33,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -52,7 +52,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -73,7 +73,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -94,7 +94,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -117,7 +117,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -138,7 +138,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -160,7 +160,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -181,7 +181,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -204,7 +204,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -228,7 +228,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -248,7 +248,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -270,7 +270,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -292,7 +292,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -301,7 +301,7 @@ public class AssignLicensesTest extends BaseTest {
                 .then()
                 .statusCode(200);
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -321,7 +321,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecOrgAdmin)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -343,7 +343,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationViewer)
+        RestAssured.given(requestSpecViewerTeamTest1)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -365,7 +365,7 @@ public class AssignLicensesTest extends BaseTest {
                     .sendEmail(false)
                     .build();
 
-            RestAssured.given(requestSpecificationTeamAdmin)
+            RestAssured.given(requestSpecAdminTeamTest2)
                     .contentType(ContentType.JSON)
                     .body(assignLicenseRequest)
                     .log().all()
@@ -388,7 +388,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationTeamAdmin)
+        RestAssured.given(requestSpecAdminTeamTest2)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -418,7 +418,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationInvalidCustomerCode)
+        RestAssured.given(requestSpecInvalidCustomerCode)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -439,7 +439,7 @@ public class AssignLicensesTest extends BaseTest {
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationInvalidToken)
+        RestAssured.given(requestSpecInvalidToken)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
