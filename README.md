@@ -8,26 +8,23 @@ Tests are taking API auth details from environment variables.
 
 **Initial setup**: 
 
-1. Team1 with available license to assign.
-    * Enable API for Org Admin.
+1. **ApiTest_Team1** with available licenses to assign.
+    * Available Expired license
+    * Available Active license
+    * Unavailable Expired License
+    * Unavailable Active License
+    * Enable API for Org Admin -> put to env variable X_API_KEY_ORG_ADMIN
     * Add Viewer to Team
-    * Enable API for Viewer
+    * Enable API for Viewer -> put to env variable X_API_KEY_VIEWER
+   
    
 
-2. Team2 with another available license to assign:
+2. **ApiTest_Team2** with another available license to assign:
     * Add Team Admin to Team.
-    * Enable API for Team Admin.
+    * Enable API for Team Admin -> put to env variable X_API_KEY_TEAM_ADMIN
 
  
-3. Put tokens for users and you organisation ID to env variables in your system:
-
-   X_API_KEY_ORG_ADMIN
-
-   X_API_KEY_TEAM_ADMIN
-   
-   X_API_KEY_VIEWER
-
-   X_CUSTOMER_CODE
+3. Put organisation ID to env variables X_CUSTOMER_CODE
 
 
 ### Prerequisites

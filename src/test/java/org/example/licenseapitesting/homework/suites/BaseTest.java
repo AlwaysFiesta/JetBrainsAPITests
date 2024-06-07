@@ -25,6 +25,9 @@ public class BaseTest {
     protected static RequestSpecification requestSpecificationTeamAdmin;
 
     protected static RequestSpecification requestSpecificationViewer;
+    protected static RequestSpecification requestSpecificationInvalidToken;
+
+    protected static RequestSpecification requestSpecificationInvalidCustomerCode;
 
     @BeforeAll
     static void setUp() {
@@ -53,6 +56,19 @@ public class BaseTest {
                 .accept(ContentType.JSON)
                 .header("X-Api-Key", tokenViewer.getXApiKey())
                 .header("X-Customer-Code", tokenViewer.getXCustomerCode());
+
+        requestSpecificationInvalidToken = RestAssured.given()
+                .baseUri(BASE_URI)
+                .accept(ContentType.JSON)
+                .header("X-Api-Key", "invalid")
+                .header("X-Customer-Code",  tokenOrgAdmin.getXCustomerCode());
+
+        requestSpecificationInvalidCustomerCode = RestAssured.given()
+                .baseUri(BASE_URI)
+                .accept(ContentType.JSON)
+                .header("X-Api-Key", tokenOrgAdmin.getXApiKey())
+                .header("X-Customer-Code", "test");
+
     }
 
     @AfterAll

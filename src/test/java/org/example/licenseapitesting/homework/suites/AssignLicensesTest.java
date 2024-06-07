@@ -24,11 +24,11 @@ public class AssignLicensesTest extends BaseTest {
         //TODO: make same license available to assign in tests.
     }
 
-    @Disabled
+    @Disabled("Not working without test data reset")
     @Test
     public void assignAvailableLicense_ToExistingAdminUserbyLicenceID_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(getExistingUser())
                 .sendEmail(false)
                 .build();
@@ -43,11 +43,11 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(200);
     }
 
-    @Disabled
+    @Disabled("Not working without test data reset")
     @Test
     public void assignAvailableLicense_ToNewUser_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(getRandomUser())
                 .sendEmail(false)
                 .build();
@@ -62,13 +62,13 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(200);
     }
 
-    @Disabled
+    @Disabled("Not working without test data reset")
     @Test
     public void AssignAvailableLicense_userNameNotAsInProfile_Success() throws IOException {
         AssigneeContactRequest contact = getExistingUser();
         contact.setFirstName("Flora");
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(contact)
                 .sendEmail(false)
                 .build();
@@ -89,7 +89,7 @@ public class AssignLicensesTest extends BaseTest {
         AssigneeContactRequest contact = getExistingUser();
         contact.setEmail(DISPOSABLE_EMAIL);
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(contact)
                 .sendEmail(false)
                 .build();
@@ -112,7 +112,7 @@ public class AssignLicensesTest extends BaseTest {
         AssigneeContactRequest contact = getExistingUser();
         contact.setEmail("test.com");
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(contact)
                 .sendEmail(false)
                 .build();
@@ -134,7 +134,7 @@ public class AssignLicensesTest extends BaseTest {
     @Test
     public void assignAvailableLicense_NoUserProvided_ErrorBadRequest() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .sendEmail(false)
                 .build();
 
@@ -148,13 +148,13 @@ public class AssignLicensesTest extends BaseTest {
                 .statusCode(400);
     }
 
-    @Disabled
+    @Disabled("Not working without test data reset")
     @Test
     public void assignAvailableLicense_searchByTeamAndProduct_Success() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAM_1)
-                        .productCode(AVAILABLE_PRODUCTCODE)
+                        .team(TEAM_TEST1)
+                        .productCode(AVAILABLE_PRODUCTCODE_TEAM_TEST1)
                         .build())
                 .contact(getExistingUser())
                 .sendEmail(false)
@@ -175,7 +175,7 @@ public class AssignLicensesTest extends BaseTest {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
                         .team(UNKNOWN_TEAM)
-                        .productCode(AVAILABLE_PRODUCTCODE)
+                        .productCode(AVAILABLE_PRODUCTCODE_TEAM_TEST1)
                         .build())
                 .contact(getRandomUser())
                 .sendEmail(false)
@@ -197,8 +197,8 @@ public class AssignLicensesTest extends BaseTest {
     public void assignLicense_searchByTeam_UnavailableExistingProduct_ErrorNotFound() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAM_1)
-                        .productCode(UNAVAILABLE_PRODUCTCODE)
+                        .team(TEAM_TEST1)
+                        .productCode(UNAVAILABLE_PRODUCTCODE_TEAM_TEST2)
                         .build())
                 .contact(getRandomUser())
                 .sendEmail(false)
@@ -214,14 +214,14 @@ public class AssignLicensesTest extends BaseTest {
                 .log().all()
                 .statusCode(400)
                 .body("code", equalTo("NO_AVAILABLE_LICENSE_TO_ASSIGN"))
-                .body("description", equalTo("No available license found to assign in the team " + AVAILABLE_TEAM_1 + " with product " + UNAVAILABLE_PRODUCTCODE));
+                .body("description", equalTo("No available license found to assign in the team " + TEAM_TEST1 + " with product " + UNAVAILABLE_PRODUCTCODE_TEAM_TEST2));
     }
 
     @Test
     public void assignLicense_searchByTeam_UnknownProduct_ErrorNotFound() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
                 .license(AssignFromTeamRequest.builder()
-                        .team(AVAILABLE_TEAM_1)
+                        .team(TEAM_TEST1)
                         .productCode(UNKNOWN_PRODUCTCODE)
                         .build())
                 .contact(getRandomUser())
@@ -265,7 +265,7 @@ public class AssignLicensesTest extends BaseTest {
         //Just choose one of the existing in my test team.
 
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(UNAVAILABLE_LICENSEID)
+                .licenseId(UNAVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(getExistingUser())
                 .sendEmail(false)
                 .build();
@@ -283,11 +283,11 @@ public class AssignLicensesTest extends BaseTest {
 
     }
 
-    @Disabled
+    @Disabled("Not working without test data reset")
     @Test
     public void assignExistingAssignedLicense_ErrorLicenseUnavailable() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(AVAILABLE_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(getExistingUser())
                 .sendEmail(false)
                 .build();
@@ -310,7 +310,8 @@ public class AssignLicensesTest extends BaseTest {
                 .then()
                 .statusCode(400)
                 .body("code", equalTo("LICENSE_IS_NOT_AVAILABLE_TO_ASSIGN"))
-                .body("description", equalTo("ALLOCATED"));    }
+                .body("description", equalTo("ALLOCATED"));
+    }
 
     @Test
     public void assignNonExistingLicense_ErrorNotFound() throws IOException {
@@ -334,28 +335,15 @@ public class AssignLicensesTest extends BaseTest {
 
     }
 
-    @Disabled("Not Implemented")
     @Test
-    public void assignDuplicatedProductToUser_ErrorNotFound() throws IOException {
-        //TODO assign 2 licenses for the same product to the same user
-    }
-
-    @Disabled("Not Implemented")
-    @Test
-    public void assignDifferentProductsToUser_ErrorNotFound() throws IOException {
-        //TODO assign 2 licenses for the same product to the same user
-    }
-
-
-    @Test
-    public void assigAvailableLicense_withIViewerRole_Error() throws IOException {
+    public void assignAvailableLicense_withViewerRole_Error() throws IOException {
         AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
-                .licenseId(UNKNOWN_LICENSEID)
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
                 .contact(getExistingUser())
                 .sendEmail(false)
                 .build();
 
-        RestAssured.given(requestSpecificationOrgAdmin)
+        RestAssured.given(requestSpecificationViewer)
                 .contentType(ContentType.JSON)
                 .body(assignLicenseRequest)
                 .log().all()
@@ -363,13 +351,90 @@ public class AssignLicensesTest extends BaseTest {
                 .post(ASSIGN_LICENSE_PATH)
                 .then()
                 .log().all()
-                .statusCode(404)
-                .body("code", equalTo("LICENSE_NOT_FOUND"))
-                .body("description", equalTo(UNKNOWN_LICENSEID));
-
+                .statusCode(403)
+                .body("code", equalTo("INSUFFICIENT_PERMISSIONS"))
+                .body("description", equalTo("Missing Edit permission on customer " + System.getenv("X_CUSTOMER_CODE") +" or on team with id " + TEAM_TEST1));
     }
 
 
+
+    @Test
+    public void assigAvailableLicense_withTokenFromAnotherTeam_Error() throws IOException {
+        {
+            AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                    .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
+                    .contact(getExistingUser())
+                    .sendEmail(false)
+                    .build();
+
+            RestAssured.given(requestSpecificationTeamAdmin)
+                    .contentType(ContentType.JSON)
+                    .body(assignLicenseRequest)
+                    .log().all()
+                    .when()
+                    .post(ASSIGN_LICENSE_PATH)
+                    .then()
+                    .log().all()
+                    .statusCode(403)
+                    .body("code", equalTo("TEAM_MISMATCH"))
+                    .body("description", equalTo("Token was generated for team with id " + TEAM_TEST2));
+        }
+    }
+
+
+    @Disabled("Not Implemented yet")
+    @Test
+    public void assignDuplicatedProductToUser_ErrorNotFound() throws IOException {
+        //TODO assign 2 licenses for the same product to the same user
+    }
+
+    @Disabled("Not Implemented yet")
+    @Test
+    public void assignDifferentProductsToUser_ErrorNotFound() throws IOException {
+        //TODO assign 2 licenses for the same product to the same user
+    }
+
+    @Test
+    public void invalidCustomerCode_Error401() throws IOException {
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
+                .contact(getExistingUser())
+                .sendEmail(false)
+                .build();
+
+        RestAssured.given(requestSpecificationInvalidCustomerCode)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post(ASSIGN_LICENSE_PATH)
+                .then()
+                .log().all()
+                .statusCode(401)
+                .body("code", equalTo("INVALID_TOKEN"))
+                .body("description", equalTo("The token provided is invalid"));
+    }
+
+    @Test
+    public void invalidToken_Error401() throws IOException {
+        AssignLicenseRequest assignLicenseRequest = AssignLicenseRequest.builder()
+                .licenseId(AVAILABLE_LICENSEID_TEAM_TEST1)
+                .contact(getExistingUser())
+                .sendEmail(false)
+                .build();
+
+        RestAssured.given(requestSpecificationInvalidToken)
+                .contentType(ContentType.JSON)
+                .body(assignLicenseRequest)
+                .log().all()
+                .when()
+                .post(ASSIGN_LICENSE_PATH)
+                .then()
+                .log().all()
+                .statusCode(401)
+                .body("code", equalTo("INVALID_TOKEN"))
+                .body("description", equalTo("The token provided is invalid"));
+    }
 
     //TODO basic format test: past team id not as int32
 
